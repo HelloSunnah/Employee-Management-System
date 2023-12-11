@@ -54,7 +54,7 @@
                                 <tr>
                                     <td>{{$key+1}}</td>
                                     <td>{{$skill->name}}</td>
-                                    <td><button onclick="destroy()" class=" btn btn-danger">
+                                    <td><button onclick="destroy({{ $skill->id }})" class=" btn btn-danger">
                                             Delete
                                         </button></td>
                                 </tr>
@@ -82,5 +82,20 @@
             }
         });
     }
+    function destroy(itemId) {
+            if (confirm('Are you sure you want to delete this item?')) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/items/' + itemId,
+                    success: function (response) {
+                        console.log(response);
+                        // Handle success, update UI, etc.
+                    },
+                    error: function (error) {
+                        console.error('Error deleting item:', error);
+                    }
+                });
+            }
+        }
 </script>
 @endsection
