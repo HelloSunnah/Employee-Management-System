@@ -37,21 +37,10 @@ class EmployeeController extends Controller
             'gender' => 'required',
         ]);
 
-        $fileName = null;
-        // if ($request->hasFile('image')) {
-        //     $fileName = 'employee' . '_' . date('ymhmsis') . '.' . $request->file('image')->getClientOriginalExtension();
-        //     $request->file('image')->storeAs('/uploads/infopicture', $fileName);
-        // }
-        if($request->hasFile('image')){
-            $fileName = time() . '.' . $request->file('image')->getclientOriginalExtension();
-            $request->file('image')->move(public_path('/uploads/employee'), $fileName);
-            $fileName = "/uploads/employee/" . $fileName;
-        }
-        dd($fileName);
+     
        $em= Employee::create([
             'name' => $request->name,
             'email' => $request->email,
-            'image' => $fileName,
             'gender' => $request->gender,
             'skill_id' => json_encode($request->skill_id),
         ]);
