@@ -21,6 +21,7 @@ class EmployeeController extends Controller
     public function create()
     {
         $data['skills'] = Skill::all();
+        $data['employees'] = Employee::all();
         return view('backend/Feature/Employee/index', $data);
     }
 
@@ -29,6 +30,7 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|unique:users,email',
@@ -36,17 +38,24 @@ class EmployeeController extends Controller
         ]);
 
         $fileName = null;
-        if ($request->hasFile('image')) {
-            $fileName = 'employee' . '_' . date('ymhmsis') . '.' . $request->file('image')->getClientOriginalExtension();
-            $request->file('image')->storeAs('/uploads/infopicture', $fileName);
+        // if ($request->hasFile('image')) {
+        //     $fileName = 'employee' . '_' . date('ymhmsis') . '.' . $request->file('image')->getClientOriginalExtension();
+        //     $request->file('image')->storeAs('/uploads/infopicture', $fileName);
+        // }
+        if($request->hasFile('image')){
+            $fileName = time() . '.' . $request->file('image')->getclientOriginalExtension();
+            $request->file('image')->move(public_path('/uploads/employee'), $fileName);
+            $fileName = "/uploads/employee/" . $fileName;
         }
-        Employee::create([
+        dd($fileName);
+       $em= Employee::create([
             'name' => $request->name,
             'email' => $request->email,
             'image' => $fileName,
             'gender' => $request->gender,
-            'skill' => json_encode($request->skill),
+            'skill_id' => json_encode($request->skill_id),
         ]);
+        //dd($em);
         return response()->json(['message' => 'Employee created successfully']);
     }
 

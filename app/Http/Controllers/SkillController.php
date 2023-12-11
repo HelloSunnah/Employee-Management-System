@@ -8,11 +8,13 @@ use Illuminate\Http\Request;
 
 class SkillController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        return view('backend/Feature/Skill/index');
     }
 
     /**
@@ -20,8 +22,8 @@ class SkillController extends Controller
      */
     public function create()
     {
-        $data['skills']=Skill::all();
-        return view('backend/Feature/Skill/index',$data);
+        $data['skills'] = Skill::all();
+        return view('backend/Feature/Skill/index', $data);
     }
 
     /**
@@ -67,8 +69,18 @@ class SkillController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        try {
+            $item = Skill::find($id);
+            if ($item) {
+                $item->delete();
+                return response()->json(['status' => 'success', 'message' => 'Item deleted successfully']);
+            } else {
+                return response()->json(['status' => 'error', 'message' => 'Item not found'], 404);
+            }
+        } catch (Exception  $e) {
+            return $e->getMessage();
+        }
     }
 }
