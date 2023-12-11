@@ -36,11 +36,7 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="row g-5 ">
-                                    <div class="col-auto">
-                                        <label class="col-form-label" style="padding-right: 45px; font-size:20px;">Image</label>
-                                    </div>
-                                </div>
+                               
                                 <div class="row g-5">
                                     <div class="col-auto">
                                         <label class="col-form-label" style="padding-right: 45px; font-size:20px;">Gender</label>
