@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Skill;
 use App\Models\Employee;
 use Illuminate\Http\Request;
@@ -77,6 +78,16 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $item = Employee::find($id);
+            if ($item) {
+                $item->delete();
+                return response()->json(['status' => 'success', 'message' => 'Item deleted successfully']);
+            } else {
+                return response()->json(['status' => 'error', 'message' => 'Item not found'], 404);
+            }
+        } catch (Exception  $e) {
+            return $e->getMessage();
+        }
     }
 }

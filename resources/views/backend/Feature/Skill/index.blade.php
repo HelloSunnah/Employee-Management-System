@@ -54,7 +54,8 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $skill->name }}</td>
-                                            <td><button onclick="deleteItem({{ $skill->id }})" class=" btn btn-danger">
+                                            <td>
+                                                <button onclick="deleteItem({{ $skill->id }})" class=" btn btn-danger">
                                                     Delete
                                                 </button>
                                             </td>

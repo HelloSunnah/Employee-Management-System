@@ -36,7 +36,7 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                               
+
                                 <div class="row g-5">
                                     <div class="col-auto">
                                         <label class="col-form-label" style="padding-right: 45px; font-size:20px;">Gender</label>
@@ -125,6 +125,11 @@
                                             </ul>
                                             @endif
                                         </td>
+                                        <td>
+                                            <button onclick="deleteItem({{ $skill->id }})" class=" btn btn-danger">
+                                                Delete
+                                            </button>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -157,6 +162,26 @@
                     console.log(error);
                 }
             });
+        }
+        function deleteItem(itemId) {
+            console.log(itemId)
+            if (confirm('Are you sure you want to delete this item?')) {
+                var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                $.ajax({
+                    type: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    url: `{{ route('employee.destroy', ':id') }}`.replace(':id', itemId),
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(error) {
+                        console.error('Error deleting item:', error);
+                    }
+                });
+            }
         }
     </script>
     @endsection
